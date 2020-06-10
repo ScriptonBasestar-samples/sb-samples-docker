@@ -79,6 +79,9 @@ bitnami docker에서 보면
 이걸 추가 해 줘도 될 것 같지만 확인은 안 해 봣다.`"databaseSchemaPrefix": "{{$global.env.MARIADB_PREFIX}}",`
 어디서 이 값이 사용되는지 확인을 못해서
 
+
+자동으로 http -> https redirect가 되는데 설정문제.. 이미지가 완벽하지 않음
+
 ## 볼륨 경로
 
 ### bitnami/phabricator
