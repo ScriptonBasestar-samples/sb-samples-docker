@@ -22,23 +22,26 @@ services:
       - db_data:/bitnami/mariadb
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-      - MARIADB_USER=bn_mediawiki
-      - MARIADB_DATABASE=bitnami_mediawiki
+      - MARIADB_USER=bn_user
+      - MARIADB_DATABASE=bitnami_db
 
-  mediawiki:
-    image: bitnami/mediawiki
+  phabricator:
+    image: bitnami/phabricator
     ports:
       - 8080:80
     volumes:
       - web_data:/bitnami
+      - ./entry1.sh:/post-init.d/entry1.sh
     depends_on:
       - db
     environment: 
       - ALLOW_EMPTY_PASSWORD=yes
       - MARIADB_HOST=db
       - MARIADB_PORT_NUMBER=3306
-      - MEDIAWIKI_DATABASE_USER=bn_mediawiki
-      - MEDIAWIKI_DATABASE_NAME=bitnami_mediawiki
+      - MARIADB_USER=bn_user
+      # - MARIADB_PASSWORD=bitnami_db
+      - storage.default-namespace
+      - PHP_MEMORY_LIMIT=256M
 
 
 volumes:
