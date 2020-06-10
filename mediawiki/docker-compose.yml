@@ -17,25 +17,24 @@ services:
     volumes:
       - db_data:/bitnami/mariadb
     environment:
-      - MARIADB_USER=bn_wordpress
-      - MARIADB_DATABASE=bitnami_wordpress
       - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=bn_mediawiki
+      - MARIADB_DATABASE=bitnami_mediawiki
 
-  wordpress:
-    image: bitnami/wordpress:5
+  mediawiki:
+    image: bitnami/mediawiki
     ports:
-      - 8080:8080
-      # - 443:8443
+      - 8080:80
     volumes:
-      - web_data:/bitnami/wordpress
+      - web_data:/bitnami
     depends_on:
       - db
-    environment:
+    environment: 
+      - ALLOW_EMPTY_PASSWORD=yes
       - MARIADB_HOST=db
       - MARIADB_PORT_NUMBER=3306
-      - WORDPRESS_DATABASE_USER=bn_wordpress
-      - WORDPRESS_DATABASE_NAME=bitnami_wordpress
-      - ALLOW_EMPTY_PASSWORD=yes
+      - MEDIAWIKI_DATABASE_USER=bn_mediawiki
+      - MEDIAWIKI_DATABASE_NAME=bitnami_mediawiki
 
 
 volumes:
