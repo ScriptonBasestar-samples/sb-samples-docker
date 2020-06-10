@@ -1,0 +1,73 @@
+version: '3.7'
+
+
+services:
+
+  postgres11:
+    # https://hub.docker.com/_/postgres/
+    image: postgres:11-alpine
+    # container_name: postgres11
+    # restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    #   #- POSTGRES_DB=db1
+    #   - POSTGRES_MULTIPLE_DATABASES=db1,db2
+    #   #- POSTGRES_INITDB_ARGS=aaaa
+    ports:
+      - 5432:5432
+
+  redis5:
+  # https://hub.docker.com/_/redis/
+  # https://hub.docker.com/r/bitnami/redis/
+    image: bitnami/redis:5.0
+    # container_name: redis5
+    # restart: always
+    environment:
+      - REDIS_PASSWORD=password
+    ports:
+      - 6379:6379
+
+  # https://github.com/nextcloud/docker
+  nextcloud:
+    image: nextcloud
+    ports:
+      - 8080:80
+    volumes:
+      - nextcloud-data:/var/www/html/data
+      - nextcloud-config:/var/www/html/config
+      - nextcloud-custom_apps:/var/www/html/custom_apps
+      - nextcloud-apps:/var/www/html/apps
+      - nextcloud-themes:/var/www/html/themes
+    depends_on:
+      - redis5
+      - postgres11
+    environment:
+      # REDIS
+      - REDIS_HOST=redis5
+      - REDIS_HOST_PORT=6379
+      - REDIS_HOST_PASSWORD=password
+      # PG
+      - POSTGRES_DB=nextcloud_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST=postgres11
+
+      - NEXTCLOUD_ADMIN_USER=admin
+      # - NEXTCLOUD_DATA_DIR=/var/www/html
+      - NEXTCLOUD_ADMIN_PASSWORD=password
+
+
+volumes:
+  db_data:
+    driver: local
+  nextcloud-data:
+    driver: local
+  nextcloud-config:
+    driver: local
+  nextcloud-custom_apps:
+    driver: local
+  nextcloud-apps:
+    driver: local
+  nextcloud-themes:
+    driver: local
