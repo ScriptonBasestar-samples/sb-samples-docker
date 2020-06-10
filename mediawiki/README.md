@@ -5,7 +5,7 @@ Mediawiki
 
 * https://hub.docker.com/_/mediawiki
   https://github.com/wikimedia/mediawiki-docker
-* https://hub.docker.com/r/bitnami/mediawiki/
+* https://hub.docker.com/r/bitnami/mediawiki
   https://github.com/bitnami/bitnami-docker-mediawiki
 
 ## 볼륨 경로

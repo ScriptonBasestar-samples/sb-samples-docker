@@ -1,0 +1,44 @@
+version: '3.7'
+
+
+services:
+
+  # db:
+  #   image: bitnami/mysql:8.0
+  #   volumes:
+  #     - db_data:/bitnami/mysql
+  #   environment:
+  #     - MYSQL_USER=bn_wordpress
+  #     - MYSQL_DATABASE=bitnami_wordpress
+  #     - ALLOW_EMPTY_PASSWORD=yes
+
+  db:
+    image: bitnami/mariadb:10
+    volumes:
+      - db_data:/bitnami/mariadb
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=bn_joomla
+      - MARIADB_DATABASE=bitnami_joomla
+
+  joomla:
+    image: bitnami/joomla
+    ports:
+      - 8080:80
+    volumes:
+      - web_data:/bitnami
+    depends_on:
+      - db
+    environment: 
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_HOST=db
+      - MARIADB_PORT_NUMBER=3306
+      - JOOMLA_DATABASE_USER=bn_joomla
+      - JOOMLA_DATABASE_NAME=bitnami_joomla
+
+
+volumes:
+  db_data:
+    driver: local
+  web_data:
+    driver: local
