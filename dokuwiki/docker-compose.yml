@@ -1,0 +1,39 @@
+version: '3.7'
+
+
+services:
+
+  dokuwiki-install:
+    image: linuxserver/dokuwiki
+    ports:
+      - 8081:80
+    volumes:
+      - doku-conf:/install/dokuwiki/conf
+      - doku-data:/install/dokuwiki/data
+      - doku-lib:/install/dokuwiki/lib
+      - ./uploads.ini:/config/php/uploads.ini
+    environment: 
+      - TZ=Asia/Seoul
+      # - APP_URL=/dokuwiki
+
+  dokuwiki:
+    image: linuxserver/dokuwiki
+    ports:
+      - 8080:80
+    volumes:
+      - doku-conf:/config/dokuwiki/conf
+      - doku-data:/config/dokuwiki/data
+      - doku-lib:/config/dokuwiki/lib
+      - ./uploads.ini:/config/php/uploads.ini
+    environment: 
+      - TZ=Asia/Seoul
+      # - APP_URL=/dokuwiki
+
+
+volumes:
+  doku-conf:
+    driver: local
+  doku-data:
+    driver: local
+  doku-lib:
+    driver: local
