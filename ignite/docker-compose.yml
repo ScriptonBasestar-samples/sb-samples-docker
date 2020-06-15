@@ -1,0 +1,28 @@
+version: '3.7'
+
+
+services:
+
+  db:
+    # image: apacheignite/ignite
+    # image: apacheignite/ignite:2.2.0
+    ports:
+     - "11211:11211"
+     - "47500-47509:47500-47509"
+    volumes:
+      - persistence-volume:/persistence
+      - ./config:/config:ro
+    environment:
+      IGNITE_WORK_DIR: /persistence
+      CONFIG_URI: file:/config/ignite-config.xml
+      IGNITE_QUIET: "false"
+      OPTION_LIBS: ignite-rest-http,ignite-cassandra-store,ignite-cassandra-serializers,ignite-kubernetes
+      JVM_OPTS: "-server -Xms1g  -Xmx1g -XX:NewSize=512m -XX:SurvivorRatio=6 -XX:+AlwaysPreTouch
+              -XX:+UseG1GC -XX:MaxGCPauseMillis=2000 -XX:GCTimeRatio=4 -XX:InitiatingHeapOccupancyPercent=30
+              -XX:G1HeapRegionSize=8M -XX:ConcGCThreads=2 -XX:G1HeapWastePercent=10 -XX:+UseTLAB
+              -XX:+ScavengeBeforeFullGC -XX:+DisableExplicitGC"
+
+
+volumes:
+  persistence-volume:
+    driver: local
