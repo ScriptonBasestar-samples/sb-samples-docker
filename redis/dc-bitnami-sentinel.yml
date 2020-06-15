@@ -1,0 +1,54 @@
+version: '3.7'
+
+
+services:
+
+  redis-master:
+    image: bitnami/redis-sentinel
+    ports:
+      - 6379
+    volumes:
+      - db-cert:/opt/bitnami/redis/certs
+      - db_data:/bitnami/redis/data
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - REDIS_PASSWORD=password
+      - DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+      # tls
+      - REDIS_TLS_ENABLED=yes
+      - REDIS_TLS_CERT_FILE=/opt/bitnami/redis/certs/redis.crt
+      - REDIS_TLS_KEY_FILE=/opt/bitnami/redis/certs/redis.key
+      - REDIS_TLS_CA_FILE=/opt/bitnami/redis/certs/redisCA.crt
+      - REDIS_SENTINEL_TLS_ENABLED=yes
+      - REDIS_SENTINEL_TLS_CERT_FILE=/opt/bitnami/redis/certs/redis.crt
+      - REDIS_SENTINEL_TLS_KEY_FILE=/opt/bitnami/redis/certs/redis.key
+      - REDIS_SENTINEL_TLS_CA_FILE=/opt/bitnami/redis/certs/redisCA.crt
+    networks:
+      - app-tier
+
+  redis-slave:
+    image: bitnami/redis-sentinel
+    ports:
+      - 6379
+    volumes:
+      - db-cert:/opt/bitnami/redis/certs
+      - db_data:/bitnami/redis/data
+    environment:
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=masterpassword
+      - REDIS_PASSWORD=password
+    networks:
+      - app-tier
+
+
+volumes:
+  db_data:
+    driver: local
+  web_data:
+    driver: local
+
+networks:
+  app-tier:
+    driver: bridge
