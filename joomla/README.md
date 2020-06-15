@@ -22,3 +22,9 @@ Joomla
 ```
 /bitnami
 ```
+
+## 사용 테스트
+
+http://localhost:8080/administrator
+
+user // bitnami
