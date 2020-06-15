@@ -1,0 +1,30 @@
+version: '3.7'
+
+
+services:
+
+  memcached:
+    image: memcached
+    ports:
+      - 11211:11211
+    volumes:
+      - db_data:/etc/sysconfig/memcached
+
+  bitnami-memcached:
+    image: bitnami/memcached
+    ports:
+      - 11212:11211
+    volumes:
+      - db_data:/opt/bitnami/memcached/conf/memcachedsasldb
+
+  sameersbn-memcached:
+    image: sameersbn/memcached
+    ports:
+      - 11213:11211
+
+
+volumes:
+  db_data:
+    driver: local
+  web_data:
+    driver: local
