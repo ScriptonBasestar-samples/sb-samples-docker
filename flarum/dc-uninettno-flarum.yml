@@ -1,0 +1,47 @@
+version: '3.7'
+
+
+# fuck
+services:
+
+  db:
+    image: bitnami/mariadb:10
+    # ports:
+    #   - 3306:3306
+    volumes:
+      - db_data:/bitnami/mariadb
+    environment:
+      - MARIADB_ROOT_PASSWORD=password
+      - MARIADB_PASSWORD=password
+      - MARIADB_USER=bn_user
+      - MARIADB_DATABASE=bitnami_db
+
+  uninettno-flarum-docker-uh:
+    image: uninettno/flarum-docker-uh
+    ports:
+      - 8002:80
+    depends_on:
+      - db
+    environment: 
+      - BASE_URL=http://localhost:8002
+      - DB_HOST=db
+      - DB_NAME=bitnami_db
+      - DB_UNAME=bn_user 
+      - DB_PW=password
+      - ADMIN_UNAME=admin
+      - ADMIN_PW=password
+      - ADMIN_MAIL=admin@test.co.kr
+      - SITE_NAME=Test flarum
+      - DATAPORTEN_CLIENTID=DATAPORTEN_CLIENT_ID
+      - DATAPORTEN_CLIENTSECRET=DATAPORTEN_CLIENT_SECRET
+
+
+volumes:
+  db_data:
+    driver: local
+  flarum-assets:
+    driver: local
+  flarum-extensions:
+    driver: local
+  flarum-nginx:
+    driver: local

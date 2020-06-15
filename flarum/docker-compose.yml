@@ -1,0 +1,56 @@
+version: '3.7'
+
+
+services:
+
+  db:
+    image: bitnami/mariadb:10
+    # ports:
+    #   - 3306:3306
+    volumes:
+      - db_data:/bitnami/mariadb
+    environment:
+      - MARIADB_ROOT_PASSWORD=password
+      - MARIADB_PASSWORD=password
+      - MARIADB_USER=bn_user
+      - MARIADB_DATABASE=bitnami_db
+
+  mondedie-flarum:
+    image: mondedie/flarum
+    ports:
+      - 8888:8888
+    depends_on:
+      - db
+    volumes:
+      - flarum-assets:/flarum/app/public/assets
+      - flarum-extensions:/flarum/app/extensions
+      - flarum-nginx:/etc/nginx/conf.d
+    environment: 
+      - DEBUG=false
+      - FORUM_URL=http://localhost:8888
+
+      # Database configuration
+      - DB_HOST=db
+      - DB_NAME=bitnami_db
+      - DB_USER=bn_user
+      - DB_PASS=password
+      - DB_PREF=flarum_
+      - DB_PORT=3306
+
+      # User admin flarum (environment variable for first installation)
+      # /!\ admin password must contain at least 8 characters /!\
+      - FLARUM_ADMIN_USER=admin
+      - FLARUM_ADMIN_PASS=password
+      - FLARUM_ADMIN_MAIL=admin@test.co.kr
+      - FLARUM_TITLE=Test flarum
+
+
+volumes:
+  db_data:
+    driver: local
+  flarum-assets:
+    driver: local
+  flarum-extensions:
+    driver: local
+  flarum-nginx:
+    driver: local
