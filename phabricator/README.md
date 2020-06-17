@@ -89,3 +89,11 @@ bitnami docker에서 보면
 ```
 /bitnami
 ```
+
+## 사용법
+
+```
+docker-compose up
+
+docker system prune --force --volumes
+```

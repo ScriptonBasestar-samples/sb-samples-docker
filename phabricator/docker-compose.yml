@@ -21,9 +21,10 @@ services:
     volumes:
       - db_data:/bitnami/mariadb
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - MARIADB_USER=bn_user
-      - MARIADB_DATABASE=bitnami_db
+      # - ALLOW_EMPTY_PASSWORD=yes
+      # - MARIADB_USER=bn_user
+      # - MARIADB_DATABASE=bitnami_db
+      - MARIADB_ROOT_PASSWORD=password
 
   phabricator:
     image: bitnami/phabricator
@@ -36,15 +37,15 @@ services:
     depends_on:
       - db
     environment: 
-      - ALLOW_EMPTY_PASSWORD=yes
+      # - ALLOW_EMPTY_PASSWORD=yes
       - MARIADB_HOST=db
       - MARIADB_PORT_NUMBER=3306
-      - MARIADB_USER=bn_user
-      # - MARIADB_PASSWORD=bitnami_db
+      - MARIADB_USER=root
+      - MARIADB_PASSWORD=password
       # - storage.default-namespace
       # - MARIADB_PREFIX=
       - PHP_MEMORY_LIMIT=256M
-      - PHABRICATOR_HOST=http://127.0.0.1
+      - PHABRICATOR_HOST=http://127.0.0.1:8080
       - PHABRICATOR_USERNAME=user
       - PHABRICATOR_PASSWORD=bitnami1
       - PHABRICATOR_EMAIL=user@example.com

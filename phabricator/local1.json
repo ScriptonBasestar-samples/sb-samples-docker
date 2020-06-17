@@ -1,0 +1,33 @@
+{
+    "diffusion.ssh-port": 22,
+    "diffusion.ssh-user": "git",
+    "phd.user": "phabricator",
+    "phabricator.base-uri": "https://127.0.0.1",
+    "diffusion.allow-git-lfs": false,
+    "config.ignore-issues": {
+      "mysql.mode": true,
+      "mysql.ft_stopword_file": true,
+      "mysql.ft_min_word_len": true,
+      "mysql.innodb_buffer_pool_size": true,
+      "mysql.utf8mb4": true,
+      "extension.apc.stat-enabled": true,
+      "mysql.ft_boolean_syntax": true,
+      "mysql.max_allowed_packet": true,
+      "pygments.noenabled": true,
+      "extension.apcu": true,
+      "security.security.alternate-file-domain": true
+    },
+    "security.hmac-key": "4b2woUAet1Ke5YnvzrcPVlfdFwHoG6b599uhtvkxUhRT",
+    "mysql.pass": "5SXBlbW5WE",
+    "storage.mysql-engine.max-size": 0,
+    "storage.default-namespace": "bitnami_phabricator",
+    "mysql.user": "bn_phabricator",
+    "mysql.port": "3306",
+    "mysql.host": "db",
+    "environment.append-paths": [
+      "/opt/bitnami/git/bin"
+    ],
+    "repository.default-local-path": "/opt/bitnami/phabricator/repo",
+    "storage.local-disk.path": "/opt/bitnami/phabricator/data",
+    "phd.log-directory": "/opt/bitnami/phabricator/tmp/phd/log"
+  }
