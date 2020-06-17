@@ -8,9 +8,9 @@ Mediawiki
 
 ## 주의사항
 
-mysql 스키마를 수십개 생성해서 디비를 별도로 사용해야한다
+### mysql 스키마를 수십개 생성해서 디비를 별도로 사용해야한다
 
-bitnami이미지는 bitnami_ prefix가 붙는 문제
+### bitnami이미지는 bitnami_ prefix가 붙는 문제
 
 /opt/bitnami/phabricator/conf/local/local.json
 ```
@@ -78,9 +78,18 @@ bitnami docker에서 보면
 ```
 이걸 추가 해 줘도 될 것 같지만 확인은 안 해 봣다.`"databaseSchemaPrefix": "{{$global.env.MARIADB_PREFIX}}",`
 어디서 이 값이 사용되는지 확인을 못해서
+변경을 못하겠고
 
+entry1.sh 사용해서 수정
 
-자동으로 http -> https redirect가 되는데 설정문제.. 이미지가 완벽하지 않음
+### 자동으로 http -> https redirect가 되는데 설정문제..
+
+이미지가 완벽하지 않음 127.0.0.1을 적으면 https로 redirect 시켜버린다
+
+무조건 https적용되는데 http://라고 적으면 오류발생
+
+프락시를 사용할거니까 entry1.sh 사용해서 https://를 http:// 로 변
+
 
 ## 볼륨 경로
 

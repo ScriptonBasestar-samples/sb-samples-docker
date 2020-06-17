@@ -30,7 +30,7 @@ services:
     image: bitnami/phabricator
     ports:
       - 8080:80
-      - 443:443
+      # - 443:443
     volumes:
       - web_data:/bitnami
       - ./entry1.sh:/post-init.d/entry1.sh
@@ -45,7 +45,7 @@ services:
       # - storage.default-namespace
       # - MARIADB_PREFIX=
       - PHP_MEMORY_LIMIT=256M
-      - PHABRICATOR_HOST=http://127.0.0.1:8080
+      - PHABRICATOR_HOST=127.0.0.1
       - PHABRICATOR_USERNAME=user
       - PHABRICATOR_PASSWORD=bitnami1
       - PHABRICATOR_EMAIL=user@example.com
@@ -55,6 +55,7 @@ services:
       - PHABRICATOR_USE_LFS=yes
       - PHABRICATOR_SSH_PORT_NUMBER=22
       - PHABRICATOR_ENABLE_GIT_SSH_REPOSITORY=no
+
 
 volumes:
   db_data:
